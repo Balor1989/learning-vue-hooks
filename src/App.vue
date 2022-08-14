@@ -12,16 +12,18 @@
       <p>{{ newVersion }}</p>
 
       <button class="btn" @click="change">Изменить</button>
+      <div class="form-control"><input type="text" ref="textInput" /></div>
     </div>
   </div>
 </template>
 
 <script>
-import { computed, reactive, ref } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 export default {
   setup() {
     const name = ref("VueJS");
     const version = ref(2);
+    const textInput = ref(null);
 
     // function changeInfo() {
     //   name.value = "Vue JS!";
@@ -35,10 +37,16 @@ export default {
     function changeInfo() {
       name.value = "Vue JS!";
       version.value = 3;
+      console.log(textInput.value.value);
     }
 
     const newVersion = computed(() => {
       return version.value * 3;
+    });
+
+    watch(newVersion, (newValue, oldValue) => {
+      console.log(newValue);
+      console.log(oldValue);
     });
 
     return {
@@ -47,6 +55,7 @@ export default {
       change: changeInfo,
       allVars,
       newVersion,
+      textInput,
     };
   },
 };
