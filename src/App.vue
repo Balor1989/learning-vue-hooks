@@ -17,12 +17,12 @@
       </div>
     </div>
 
-    <TheInfo :name="name" :version="version" />
+    <TheInfo @change-version="changeVersion" />
   </div>
 </template>
 
 <script>
-import { computed, reactive, ref, watch } from "vue";
+import { computed, provide, reactive, ref, watch } from "vue";
 import TheInfo from "./components/TestInfo";
 export default {
   components: { TheInfo },
@@ -41,6 +41,10 @@ export default {
       version: 2,
     });
 
+    function changeVersion(number) {
+      version.value = number;
+    }
+
     function changeInfo() {
       name.value = "Vue JS!";
       version.value = 3;
@@ -56,6 +60,9 @@ export default {
       console.log(oldValue);
     });
 
+    provide("name", name);
+    provide("version", version);
+
     return {
       name,
       version,
@@ -64,6 +71,7 @@ export default {
       newVersion,
       textInput,
       firstName,
+      changeVersion,
     };
   },
 };

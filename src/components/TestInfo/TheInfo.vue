@@ -16,16 +16,27 @@
       <label for="firstName">First Name</label>
       <input type="text" id="firstName" v-model="firstName" />
     </div>
+    <button class="btn warning" @click="changeVersion">Изменить версию</button>
   </div>
 </template>
 
 <script>
-import { computed } from "@vue/runtime-core";
+import { computed, inject } from "vue";
 export default {
-  props: ["name", "version"],
-  setup(props) {
+  // props: ["name", "version"],
+  emits: ["change-version"],
+  setup(props, context) {
+    function change() {
+      context.emit("change-version", 2);
+    }
+
+    const version = inject("version");
+
     return {
-      newVersion: computed(() => props.version * 3),
+      name: inject("name"),
+      changeVersion: change,
+      version,
+      newVersion: computed(() => version.value * 3),
     };
   },
 };
