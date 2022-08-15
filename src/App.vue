@@ -22,7 +22,18 @@
 </template>
 
 <script>
-import { computed, provide, reactive, ref, watch } from "vue";
+import {
+  computed,
+  provide,
+  reactive,
+  ref,
+  onBeforeMount,
+  onMounted,
+  onBeforeUpdate,
+  onUpdated,
+  onBeforeUnmount,
+  onUnmounted,
+} from "vue";
 import TheInfo from "./components/TestInfo";
 export default {
   components: { TheInfo },
@@ -41,6 +52,25 @@ export default {
       version: 2,
     });
 
+    onBeforeMount(() => {
+      console.log("onBeforeMount");
+    });
+    onMounted(() => {
+      console.log("onMounted");
+    });
+    onBeforeUpdate(() => {
+      console.log("onBeforeUpdate");
+    });
+    onUpdated(() => {
+      console.log("onUpdated");
+    });
+    onBeforeUnmount(() => {
+      console.log("onBeforeUnmount");
+    });
+    onUnmounted(() => {
+      console.log("onUnmounted");
+    });
+
     function changeVersion(number) {
       version.value = number;
     }
@@ -55,10 +85,10 @@ export default {
       return version.value * 3;
     });
 
-    watch(newVersion, (newValue, oldValue) => {
-      console.log(newValue);
-      console.log(oldValue);
-    });
+    // watch(newVersion, (newValue, oldValue) => {
+    //   console.log(newValue);
+    //   console.log(oldValue);
+    // });
 
     provide("name", name);
     provide("version", version);
